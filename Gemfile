@@ -6,6 +6,7 @@ gem 'coinbase', '~> 4.0'
 gem 'money-open-exchange-rates', '~> 0.3'
 gem 'mailgun-ruby', '~>1.0.3', require: 'mailgun'
 gem 'rake', '~> 10.4'
+gem 'chronic_duration', '~> 0.10'
 
 group :development, :test do
 end

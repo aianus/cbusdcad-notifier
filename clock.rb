@@ -1,4 +1,5 @@
 require 'clockwork'
+require 'chronic_duration'
 require './notifier.rb'
 
 module Clockwork
@@ -9,5 +10,5 @@ module Clockwork
     end
   end
 
-  every(30.minutes, 'poll')
+  every(ChronicDuration.parse(ENV['POLLING_INTERVAL']).seconds, 'poll')
 end
