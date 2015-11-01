@@ -1,6 +1,6 @@
 require 'clockwork'
 require 'chronic_duration'
-require './notifier.rb'
+require './lib/notifier.rb'
 
 POLLING_INTERVAL = ENV.fetch('POLLING_INTERVAL', '10 minutes')
 
