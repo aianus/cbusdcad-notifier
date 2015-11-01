@@ -12,19 +12,19 @@ module Notifier
     puts "Polling..."
 
     coinbase = Coinbase::Client.new
-    coinbase_sell_price = coinbase.spot_price
+    spot_price = coinbase.spot_price
 
     coins_response = JSON.parse RestClient.get('https://coins.co.th/api/v1/quote').body
     coins_sell_price = Money.from_amount(coins_response['quote']['bid'], "THB")
 
     message = <<-END
-Price on Coinbase: #{coinbase_sell_price.format}
+Price on Coinbase: #{spot_price.format}
 Price on coins.co.th: #{coins_sell_price.format} (#{coins_sell_price.exchange_to(:USD).format})
 END
 
     puts message
 
-    if coins_sell_price >= coinbase_sell_price * (1 - ACCEPTABLE_COMMISSION)
+    if coins_sell_price >= spot_price * (1 - ACCEPTABLE_COMMISSION)
       mail         = Mail.new
       mail.charset = 'UTF-8'
       mail.content_transfer_encoding = '8bit'
