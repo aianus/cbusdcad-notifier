@@ -1,25 +1,18 @@
-require 'coinbase/wallet'
-require 'money/bank/open_exchange_rates_bank'
+require 'coinbase'
 require 'rest-client'
-require 'mailgun'
+require './lib/mailer.rb'
+require './lib/exchange_rates.rb'
 
 I18n.enforce_available_locales = false
 
-ACCEPTABLE_COMMISSION = ENV['ACCEPTABLE_COMMISSION'].to_f
+ACCEPTABLE_COMMISSION = ENV.fetch('ACCEPTABLE_COMMISSION', '0.0').to_f
 
 module Notifier
   def self.poll
     puts "Polling..."
 
-    moe = Money::Bank::OpenExchangeRatesBank.new
-    moe.app_id = ENV['OPEN_EXCHANGE_RATES_APP_ID']
-    moe.ttl_in_seconds = 36001
-    moe.update_rates
-    Money.default_bank = moe
-
-    coinbase = Coinbase::Wallet::Client.new(api_key: ENV['COINBASE_API_KEY'], api_secret: ENV['COINBASE_API_SECRET'])
+    coinbase = Coinbase::Client.new
     coinbase_sell_price = coinbase.spot_price
-    coinbase_sell_price = Money.from_amount(coinbase_sell_price.amount, coinbase_sell_price.currency)
 
     coins_response = JSON.parse RestClient.get('https://coins.co.th/api/v1/quote').body
     coins_sell_price = Money.from_amount(coins_response['quote']['bid'], "THB")
@@ -32,13 +25,16 @@ END
     puts message
 
     if coins_sell_price >= coinbase_sell_price * (1 - ACCEPTABLE_COMMISSION)
-      mg_client = Mailgun::Client.new ENV['MAILGUN_API_KEY']
-      mg_client.send_message ENV['MAILGUN_DOMAIN'], {
-        :from    => ENV['NOTIFICATION_SENDER'],
-        :to      => ENV['NOTIFICATION_RECIPIENT'],
-        :subject => 'Good time to sell BTC for THB',
-        :text    => message
-      }
+      mail         = Mail.new
+      mail.charset = 'UTF-8'
+      mail.content_transfer_encoding = '8bit'
+      mail.from = ENV.fetch('NOTIFICATION_SENDER', "noreply@#{ENV.fetch('NOTIFICATION_SENDER_DOMAIN')}")
+      mail.to = ENV.fetch('NOTIFICATION_RECIPIENT')
+      mail.subject = 'Good time to sell BTC for THB'
+      mail.text_part do
+        message
+      end
+      mail.deliver!
     end
   end
 end
