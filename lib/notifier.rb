@@ -26,13 +26,12 @@ END
 
     if coins_sell_price >= spot_price * (1 - ACCEPTABLE_COMMISSION)
       mail         = Mail.new
-      mail.charset = 'UTF-8'
-      mail.content_transfer_encoding = '8bit'
       mail.from = ENV.fetch('NOTIFICATION_SENDER', "noreply@#{ENV.fetch('NOTIFICATION_SENDER_DOMAIN')}")
       mail.to = ENV.fetch('NOTIFICATION_RECIPIENT')
       mail.subject = 'Good time to sell BTC for THB'
       mail.text_part do
-        message
+        content_type 'text/plain; charset=UTF-8'
+        body message
       end
       mail.deliver!
     end
