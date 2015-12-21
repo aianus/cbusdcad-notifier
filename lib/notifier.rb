@@ -17,9 +17,13 @@ module Notifier
     coins_response = JSON.parse RestClient.get('https://coins.co.th/api/v1/quote').body
     coins_sell_price = Money.from_amount(coins_response['quote']['bid'], "THB")
 
+    spread = (((coins_sell_price / spot_price) - 1) * 100)
+
     message = <<-END
 Price on Coinbase: #{spot_price.format}
 Price on coins.co.th: #{coins_sell_price.format} (#{coins_sell_price.exchange_to(:USD).format})
+
+Spread: #{'%0.2f' % spread}%
 END
 
     puts message
