@@ -14,4 +14,4 @@ RUN bundle install
 
 COPY . /usr/src/app
 
-CMD ["bundle", "exec", "clockwork", "clock.rb"]
+CMD ["bundle", "exec", "ruby", "./main.rb"]

@@ -1,4 +1,5 @@
 require 'money/bank/open_exchange_rates_bank'
+require 'active_support/all'
 
 moe = Money::Bank::OpenExchangeRatesBank.new
 moe.ttl_in_seconds = 1.months / 2000
