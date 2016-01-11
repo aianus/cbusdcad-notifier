@@ -31,6 +31,8 @@ class Main
 
     @from_book = LiveOrderbook.new(@from_product_id, @rest_client, @from_websocket)
     @to_book = LiveOrderbook.new(@to_product_id, @rest_client, @to_websocket)
+
+    @current_spread = 0
   end
 
   def evaluate_and_notify
@@ -40,6 +42,12 @@ class Main
     from_price = Money.from_amount(@from_book.asks.first[Orderbook::PRICE], @from_currency)
 
     spread = (((to_price / from_price) - 1) * 100)
+
+    if spread == @current_spread
+      return
+    else
+      @current_spread = spread
+    end
 
     message = <<-END
 Ask in #{@from_currency}: #{from_price.format}
