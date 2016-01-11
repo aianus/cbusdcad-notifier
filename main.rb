@@ -63,13 +63,13 @@ END
       mail         = Mail.new
       mail.from    = ENV.fetch('NOTIFICATION_SENDER', "noreply@#{ENV.fetch('NOTIFICATION_SENDER_DOMAIN')}")
       mail.to      = ENV.fetch('NOTIFICATION_RECIPIENT')
-      mail.subject = 'Good time to transfer #'
+      mail.subject = 'Good time to transfer #{@from_currency} to #{@to_currency}'
       mail.text_part do
         content_type 'text/plain; charset=UTF-8'
         body message
       end
       mail.deliver!
-      puts "Sending mail at #{Time.now}, notification interval is #{NOTIFICATION_INTERVAL.to_i}"
+      puts "Sending mail at #{Time.now}"
       @last_notification_time = Time.now
     end
   end
