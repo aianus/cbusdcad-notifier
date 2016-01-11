@@ -7,6 +7,7 @@ require './lib/orderbook.rb'
 require './lib/live_orderbook.rb'
 
 I18n.enforce_available_locales = false
+$stdout.sync = true
 
 class Main
   ACCEPTABLE_COMMISSION = ENV.fetch('ACCEPTABLE_COMMISSION', '0.0').to_f
@@ -86,7 +87,7 @@ END
       @from_book.start!
       @to_book.start!
       EM.error_handler { |e|
-        p "Websocket Error: #{e.message}"
+        puts "Websocket Error: #{e.message}"
       }
     end
   end
