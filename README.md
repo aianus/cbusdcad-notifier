@@ -1,6 +1,6 @@
 # coinbaseusdcad-notifier
 
-Notifies you by email when the price differential across different products on Coinbase Exchange is favorable
+Notifies you by email when the price differential across different products on Coinbase Exchange is favorable.
 
 Useful for exchanging currencies cheaply.
 
@@ -9,7 +9,7 @@ Useful for exchanging currencies cheaply.
 To use, launch the docker image in a container with the correct env variables set.
 
 ```bash
-docker run -d --env-file=/path/to/your/env/file aianus/coinbaseusdcad-notifier
+docker run -d --env-file=/path/to/your/env/file aianus/cbusdcad-notifier
 ```
 
 ### Env variables and their defaults
@@ -28,6 +28,9 @@ ACCEPTABLE_COMMISSION=0
 NOTIFICATION_INTERVAL=10 minutes
 FROM_CURRENCY=USD
 TO_CURRENCY=CAD
+COINBASE_EXCHANGE_API_KEY=
+COINBASE_EXCHANGE_API_SECRET=
+COINBASE_EXCHANGE_API_PASSWORD=
 ```
 
 Note that despite the space, the NOTIFICATION_INTERVAL variable must not be quoted in a docker env file
