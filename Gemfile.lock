@@ -1,12 +1,3 @@
-GIT
-  remote: https://github.com/coinbase/coinbase-exchange-ruby.git
-  revision: 95d7250b8694a9ede6856567ace651de12490db9
-  specs:
-    coinbase-exchange (0.1.2)
-      bigdecimal
-      em-http-request
-      faye-websocket
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -22,6 +13,10 @@ GEM
     chronic_duration (0.10.6)
       numerizer (~> 0.1.1)
     coderay (1.1.0)
+    coinbase-exchange (0.1.2)
+      bigdecimal
+      em-http-request
+      faye-websocket
     cookiejar (0.3.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
@@ -103,7 +98,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport (~> 4.2, >= 4.2.5)
   chronic_duration (~> 0.10)
-  coinbase-exchange (~> 0.1.2)!
+  coinbase-exchange (~> 0.1.2)
   eventmachine (~> 1.0, >= 1.0.8)
   mail (~> 2.6)
   money-open-exchange-rates (~> 0.3)

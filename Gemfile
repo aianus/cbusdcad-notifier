@@ -3,7 +3,7 @@ ruby '2.2.2'
 
 gem 'mail', '~> 2.6'
 gem 'eventmachine', '~> 1.0', '>= 1.0.8'
-gem 'coinbase-exchange', '~> 0.1.2', git: 'https://github.com/coinbase/coinbase-exchange-ruby.git'
+gem 'coinbase-exchange', '~> 0.1.2'
 gem 'money-open-exchange-rates', '~> 0.3'
 gem 'rake', '~> 10.4'
 gem 'chronic_duration', '~> 0.10'

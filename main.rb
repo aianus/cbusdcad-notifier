@@ -63,7 +63,7 @@ END
       mail         = Mail.new
       mail.from    = ENV.fetch('NOTIFICATION_SENDER', "noreply@#{ENV.fetch('NOTIFICATION_SENDER_DOMAIN')}")
       mail.to      = ENV.fetch('NOTIFICATION_RECIPIENT')
-      mail.subject = 'Good time to transfer #{@from_currency} to #{@to_currency}'
+      mail.subject = "Good time to transfer #{@from_currency} to #{@to_currency}"
       mail.text_part do
         content_type 'text/plain; charset=UTF-8'
         body message
